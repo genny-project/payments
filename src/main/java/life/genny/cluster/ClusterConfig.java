@@ -20,8 +20,8 @@ public class ClusterConfig {
       System.getenv("HOSTIP") != null ? System.getenv("HOSTIP") : "127.0.0.1";
 
   private static String privateIP = System.getenv("MYIP");
-  private final static int portHazelcastCluster = 5702;
-  private final static int portEBCluster = 15702;
+  private final static int portHazelcastCluster = 5704;
+  private final static int portEBCluster = 15704;
 
   /**
    * @param toClientOutbount the toClientOutbount to set
