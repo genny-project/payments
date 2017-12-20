@@ -1,0 +1,14 @@
+payments:
+  build: .
+  ports:
+    - "3456:3456"
+  volumes:
+    - ./:/usr/src/app
+    - /usr/src/app/node_modules/
+  links:
+    - mongo:mongo
+
+mongo:
+  image: mongo:3.0-wheezy
+  ports:
+    - "27017:27017"
