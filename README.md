@@ -1,2 +1,0 @@
-# payments
-Payments Service
