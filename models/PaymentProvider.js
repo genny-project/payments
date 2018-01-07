@@ -4,6 +4,11 @@ class PaymentProvider {
     this.config = config;
   }
 
+  /* Returns the ID of this payment provider */
+  getID() {
+    return '';
+  }
+
   /* Returns the configuration for this payment provider */
   getConfig() {
     return this.config;
@@ -25,13 +30,13 @@ class PaymentProvider {
   }
 
   /* Creates a new user within this payment provider */
-  async addUser( config ) {}
+  async addUser({ user, dryRun }) {}
 
   /* Updates a user within this payment provider */
-  async updateUser( config ) {}
+  async updateUser({ user, dryRun }) {}
 
   /* Removes a user within this payment provider */
-  async removeUser( config ) {}
+  async removeUser({ user, dryRun }) {}
 }
 
 module.exports = PaymentProvider;

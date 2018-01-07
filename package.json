@@ -25,6 +25,7 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "express-error-handler": "^1.1.0",
+    "isemail": "^3.0.0",
     "mongoose": "^4.13.7",
     "nodemon": "^1.12.5",
     "winston": "^3.0.0-rc1"

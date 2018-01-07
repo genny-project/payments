@@ -14,7 +14,7 @@ class Tenant {
       ...data,
     };
 
-    this.providers = {};
+    this.providers = [];
 
     /* Check that an ID was provided */
     if ( !this.getID() || this.getID() === '' ) {
@@ -137,7 +137,7 @@ class Tenant {
       const providerConfig = this.getProviderConfig()[providerID];
 
       /* Load the payment provider using this configuration */
-      this.providers[providerID] = new ( PaymentProviderFactory.getProvider( providerID ))( providerConfig );
+      this.providers.push( new ( PaymentProviderFactory.getProvider( providerID ))( providerConfig ));
 
       Logger.info( `Successfully loaded payment provider with ID ${providerID} for tenant with ID ${this.getID()}` );
     });
