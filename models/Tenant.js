@@ -1,10 +1,12 @@
 const Logger = require( '../helpers/logging/Logger' );
+const TenantType = require( './TenantType' );
 
 class Tenant {
   constructor( data ) {
     this._data = {
       id: '',
       name: '',
+      type: '',
       notifications: [],
       providers: {},
       accessTokens: [],
@@ -27,6 +29,11 @@ class Tenant {
     return this._data.providers;
   }
 
+  /* Returns tenant type information */
+  getType() {
+    return this._data.type;
+  }
+
   /* Returns the configuration information that is can be displayed publicly */
   getPublicInfo() {
     return {
@@ -40,13 +47,25 @@ class Tenant {
   validate( logErrors = false ) {
     /* Check that an ID was provided */
     if ( !this.getID() || this.getID() === '' ) {
-      logErrors && Logger.error( 'Tenant must have ID' );
+      logErrors && Logger.error( 'Tenant must have an ID defined.' );
       return false;
     }
 
     /* Check that a name was provided */
     if ( !this.getName() || this.getName() === '' ) {
-      logErrors && Logger.error( 'Tenant must have a name' );
+      logErrors && Logger.error( `Tenant with ID: ${this.getID()} must have a name defined.` );
+      return false;
+    }
+
+    /* Check that a type was provided */
+    if ( !this.getType() || this.getType() === ''  ) {
+      logErrors && Logger.error( `Tenant with ID: ${this.getID()} must have a type defined.` );
+      return false;
+    }
+
+    /* Check that the type provided is a valid type */
+    if ( !TenantType[this.getType()] ) {
+      logErrors && Logger.error( `Tenant with ID: ${this.getID()} has invalid type: ${this.getType()}. Valid types are ${Object.keys( TenantType ).join( ', ' )}.` );
       return false;
     }
 
