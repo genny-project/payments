@@ -5,6 +5,7 @@ const API = require( '../helpers/api/API' );
 require( './users' );
 require( './tenants' );
 require( './me' );
+require( './payment-providers' );
 
 /* Define index routes */
 API.get( '/', ( req, res ) => {
