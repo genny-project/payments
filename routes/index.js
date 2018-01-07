@@ -6,5 +6,5 @@ require( './users' );
 
 /* Define index routes */
 API.get( '/', ( req, res ) => {
-  res.json({ name: 'Payments API' });
+  res.json({ name: 'Payments API', version: process.env.BUILD_NUMBER });
 });
