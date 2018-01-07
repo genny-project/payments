@@ -1,4 +1,5 @@
 const { PaymentProvider } = require( '../../models' );
+const axios = require( 'axios' );
 
 class AssemblyPayments extends PaymentProvider {
   getID() {
@@ -53,7 +54,19 @@ class AssemblyPayments extends PaymentProvider {
     }
 
     /* Create the user in Assembly */
-
+    return axios({
+      method: 'post',
+      url: `${this.getURL()}/users`,
+      auth: this.getOptions().auth,
+      data: {
+        id: _id,
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        mobile: phoneNumber,
+        country: address.country,
+      }
+    });
   }
 }
 

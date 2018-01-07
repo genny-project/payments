@@ -4,7 +4,7 @@ const securedRoute = require( '../../middlewares/auth/securedRoute' );
 const { UserFactory } = require( '../../factories' );
 const { User } = require( '../../models' );
 const isEmail = require( 'isemail' );
-const Logger = require( '../../helpers/logging/logger' );
+const Logger = require( '../../helpers/logging/Logger' );
 
 /* Returns a list of all the users for the tenant that made the request */
 API.get( '/users', securedRoute, async ( req, res ) => {
@@ -83,20 +83,34 @@ API.post( '/users', securedRoute, async( req, res ) => {
   /* Create the user */
   const user = new User( data );
 
-  let currentProvider = null;
-
   /* Before saving the user let's check whether we have enough information for each payment provider */
   try {
-    tenant.getProviders().forEach( provider => {
-      currentProvider = provider.getID();
-      provider.addUser({ user, dryRun: true });
-    });
+    await Promise.all( tenant.getProviders().map( async provider => {
+      return provider.addUser({ user, dryRun: true });
+    }));
   } catch ( e ) {
-    Logger.error( `${currentProvider} - ${e.message}` );
+    console.log( e.response.data );
+    Logger.error( e.message );
     res.status( 400 );
-    res.json({ error: e.message, source: currentProvider });
+    res.json({ error: e.message });
     return;
   }
 
-  res.json( data );
+  /* Do the whole thing again but real this time */
+  try {
+    await Promise.all( tenant.getProviders().map( async provider => {
+      return provider.addUser({ user, dryRun: false });
+    }));
+  } catch ( e ) {
+    console.log( e.response.data );
+    Logger.error( e.message );
+    res.status( 400 );
+    res.json({ error: e.message });
+    return;
+  }
+
+  /* Save the user */
+  await UserFactory.saveUser( user );
+
+  res.json( user );
 });

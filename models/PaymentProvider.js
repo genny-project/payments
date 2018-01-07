@@ -14,6 +14,11 @@ class PaymentProvider {
     return this.config;
   }
 
+  /* Returns the options for this payment provider */
+  getOptions() {
+    return this.config.options;
+  }
+
   /* Returns an array of currencies that are being used by this payment provider */
   getCurrencies() {
     return this.config.currencies;
