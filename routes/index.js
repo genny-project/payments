@@ -3,6 +3,7 @@ const API = require( '../helpers/api/API' );
 
 /* Include the sub routes */
 require( './users' );
+require( './tenants' );
 
 /* Define index routes */
 API.get( '/', ( req, res ) => {

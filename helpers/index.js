@@ -3,4 +3,5 @@ module.exports = {
   db: require( './db/db' ),
   errors: require( './errors' ),
   Logger: require( './logging/Logger' ),
+  TenantConfigLoader: require( './tenant-config' ).TenantConfigLoader,
 };

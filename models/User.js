@@ -1,5 +1,5 @@
 /* Get access to the database */
-const { db } = require( '../helpers' );
+const db = require( '../helpers/db' );
 const Schema = db.Schema;
 
 /* Create the user schema */
