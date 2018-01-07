@@ -106,7 +106,13 @@ class Tenant {
     return {
       id: this.getID(),
       name: this.getName(),
-      providers: Object.keys( this.getProviders()).map( k => ({ id: k, currencies: this.getProviders()[k].getCurrencies() })),
+      type: this.getType(),
+      providers: Object.keys( this.getProviders()).map( k => ({
+        id: k,
+        currencies: this.getProviders()[k].getCurrencies(),
+        supportsMarketplace: this.getProviders()[k].supportsMarketplace(),
+        supportsDirect: this.getProviders()[k].supportsDirect(),
+      })),
     };
   }
 

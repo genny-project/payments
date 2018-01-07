@@ -23,3 +23,8 @@ API.get( '/users/:id', securedRoute, async( req, res ) => {
   /* Return the user */
   res.json( user );
 });
+
+/* Creates a new user */
+API.post( '/users', securedRoute, async( req, res ) => {
+  res.json( req.body );
+});
