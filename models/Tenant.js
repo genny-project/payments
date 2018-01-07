@@ -34,6 +34,11 @@ class Tenant {
     return this._data.type;
   }
 
+  /* Returns an array of access tokens */
+  getAccessTokens() {
+    return this._data.accessTokens;
+  }
+
   /* Returns the configuration information that is can be displayed publicly */
   getPublicInfo() {
     return {
@@ -41,6 +46,11 @@ class Tenant {
       name: this.getName(),
       providers: Object.keys( this.getProviders ),
     };
+  }
+
+  /* Checks the provided token and secret, returning true if correct and false if incorrect */
+  checkAuthToken( token, secret ) {
+    return this.getAccessTokens().find( a => a.token === token && a.secret === secret ) != null;
   }
 
   /* Validate the data to see whether it is valid */
