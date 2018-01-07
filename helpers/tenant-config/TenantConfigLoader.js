@@ -13,14 +13,15 @@ class TenantConfigLoader {
       Logger.info( 'Tenant configuration file loaded successfully' );
 
       /* Attempt to validate all the tenants in the configuration file straight away */
-      this.config.forEach( tenant => {
-        if ( !this.validate( tenant, true )) {
-          Logger.error( 'Failed to validate tenant' );
-        } else {
-          Logger.info( `Successfully valided tenant with ID: ${tenant.id}` );
+      this.config.forEach( tenantData => {
+        try {
+          const tenant = new Tenant( tenantData );
+          Logger.info( `Successfully valided tenant with ID: ${tenant.getID()}` );
 
           /* Store the tenant */
-          this.tenants.push( new Tenant( tenant ));
+          this.tenants.push( tenant );
+        } catch ( e ) {
+          Logger.error( `Failed to load tenant. ${e}` );
         }
       });
     } catch ( e ) {
@@ -30,20 +31,10 @@ class TenantConfigLoader {
     }
   }
 
-  /* Validates the provided tenant data */
-  validate( data, logErrors = false ) {
-    if ( !data ) {
-      return false;
-    }
-
-    /* Validate and log errors */
-    return new Tenant( data ).validate( logErrors );
-  }
-
   getTenant( id ) {
     /* Check to see whether this tenant exists */
     const tenant = this.tenants.find( tenant => tenant.getID() === id );
-  
+
     return tenant;
   }
 

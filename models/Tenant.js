@@ -12,6 +12,36 @@ class Tenant {
       accessTokens: [],
       ...data,
     };
+
+    this.providers = {};
+
+    /* Check that an ID was provided */
+    if ( !this.getID() || this.getID() === '' ) {
+      throw new Error( 'Tenant must have an ID definied' );
+    }
+
+    /* Check that a name was provided */
+    if ( !this.getName() || this.getName() === '' ) {
+      throw new Error( `Tenant with ID: ${this.getID()} must have a name defined.` );
+    }
+
+    /* Check that a type was provided */
+    if ( !this.getType() || this.getType() === ''  ) {
+      throw new Error( `Tenant with ID: ${this.getID()} must have a type defined.` );
+    }
+
+    /* Check that the type provided is a valid type */
+    if ( !TenantType[this.getType()] ) {
+      throw new Error( `Tenant with ID: ${this.getID()} has invalid type: ${this.getType()}. Valid types are ${Object.keys( TenantType ).join( ', ' )}.` );
+    }
+
+    /* Check that an array of payment providers was provided */
+    if ( !this.getProviderConfig()) {
+      throw new Error( `Tenant with ID: ${this.getID()} must have payment providers defined.` );
+    }
+
+    /* Load the payment providers */
+    this.loadPaymentProviders();
   }
 
   /* Returns the ID of the tenant */
@@ -24,9 +54,14 @@ class Tenant {
     return this._data.name ? this._data.name.trim() : null;
   }
 
-  /* Returns payment provider information */
-  getProviders() {
+  /* Returns payment provider config information */
+  getProviderConfig() {
     return this._data.providers;
+  }
+
+  /* Returns payment providers */
+  getProviders() {
+    return this.providers;
   }
 
   /* Returns tenant type information */
@@ -44,7 +79,7 @@ class Tenant {
     return {
       id: this.getID(),
       name: this.getName(),
-      providers: Object.keys( this.getProviders ),
+      providers: Object.keys( this.getProviders()),
     };
   }
 
@@ -53,33 +88,17 @@ class Tenant {
     return this.getAccessTokens().find( a => a.token === token && a.secret === secret ) != null;
   }
 
-  /* Validate the data to see whether it is valid */
-  validate( logErrors = false ) {
-    /* Check that an ID was provided */
-    if ( !this.getID() || this.getID() === '' ) {
-      logErrors && Logger.error( 'Tenant must have an ID defined.' );
-      return false;
+  /* Attempt to load the defined payment providers */
+  loadPaymentProviders() {
+    Logger.info( `Attempting to load payment providers for tenant with ID: ${this.getID()}` );
+
+    /* Don't load payment providers if they have already been loaded */
+    if ( this.getProviders().length > 0 ) {
+      Logger.info( `Payment providers already loaded for tenant with ID: ${this.getID()}` );
+      return;
     }
 
-    /* Check that a name was provided */
-    if ( !this.getName() || this.getName() === '' ) {
-      logErrors && Logger.error( `Tenant with ID: ${this.getID()} must have a name defined.` );
-      return false;
-    }
-
-    /* Check that a type was provided */
-    if ( !this.getType() || this.getType() === ''  ) {
-      logErrors && Logger.error( `Tenant with ID: ${this.getID()} must have a type defined.` );
-      return false;
-    }
-
-    /* Check that the type provided is a valid type */
-    if ( !TenantType[this.getType()] ) {
-      logErrors && Logger.error( `Tenant with ID: ${this.getID()} has invalid type: ${this.getType()}. Valid types are ${Object.keys( TenantType ).join( ', ' )}.` );
-      return false;
-    }
-
-    return true;
+    Logger.info( `Successfully loaded payment providers for tenant with ID: ${this.getID()}` );
   }
 }
 
