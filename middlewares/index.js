@@ -1,4 +1,4 @@
 module.exports = {
-  injectUser: require( './auth/injectUser' ),
+  injectTenant: require( './auth/injectTenant' ),
   securedRoute: require( './auth/securedRoute' )
 };
