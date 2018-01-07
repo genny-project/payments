@@ -2,20 +2,20 @@
 const { User } = require( '../../models' );
 
 class UserFactory {
-  async getUserByEmail( email, populate ) {
-    return User.findOne({ email }, populate ).exec();
+  async getUserByEmail( tenant, email, populate ) {
+    return User.findOne({ tenant, email }, populate ).exec();
   }
 
-  async getUserByID( id, populate ) {
-    return User.findOne({ _id: id }, populate ).exec();
+  async getUserByID( tenant, id, populate ) {
+    return User.findOne({ _id: id, tenant }, populate ).exec();
   }
 
-  async getAllUsers( options, populate ) {
-    return User.find({}, populate, options ).exec();
+  async getAllUsers( tenant, options, populate ) {
+    return User.find({ tenant }, populate, options ).exec();
   }
 
-  async getUserCount() {
-    return User.count();
+  async getUserCount( tenant ) {
+    return User.count({ tenant });
   }
 
   async saveUser( user ) {
