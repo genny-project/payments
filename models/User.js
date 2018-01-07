@@ -9,7 +9,15 @@ const userSchema = new Schema({
   lastName: { type: String, required: true },
   email: { type: String, required: true },
   phoneNumber: { type: String },
-  tenant: { type: String, required: true }
+  tenant: { type: String, required: true },
+  address: {
+    line1: { type: String },
+    line2: { type: String },
+    city: { type: String },
+    state: { type: String },
+    postcode: { type: String },
+    country: { type: String }
+  }
 }, {
   timestamps: true,
 });
