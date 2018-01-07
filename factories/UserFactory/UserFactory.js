@@ -7,7 +7,13 @@ class UserFactory {
   }
 
   async getUserByID( tenant, id, populate ) {
-    return User.findOne({ _id: id, tenant }, populate ).exec();
+    let user = null;
+    try {
+      user = await User.findOne({ _id: id, tenant }, populate ).exec();
+    } catch ( e ) {
+      return null;
+    }
+    return user;
   }
 
   async getAllUsers( tenant, options, populate ) {
