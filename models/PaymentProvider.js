@@ -13,6 +13,17 @@ class PaymentProvider {
   getCurrencies() {
     return this.config.currencies;
   }
+
+  /* Returns whether or not this payment provider supports direct payments */
+  supportsDirect() {
+    return true;
+  }
+
+  /* Returns whether or not this payment provider supports marketplace payments */
+  supportsMarketplace() {
+    return true;
+  }
+
   /* Creates a new user within this payment provider */
   async addUser( config ) {}
 
