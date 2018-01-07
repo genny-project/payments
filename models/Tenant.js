@@ -40,6 +40,27 @@ class Tenant {
       throw new Error( `Tenant with ID: ${this.getID()} must have payment providers defined.` );
     }
 
+    /* Check the data structure of each provider supplied */
+    Object.keys( this.getProviderConfig()).forEach( providerID => {
+      /* Get the provider with the specified ID */
+      const provider = this.getProviderConfig()[providerID];
+
+      /* Check that an environment was provided */
+      if ( !provider.environment || provider.environment.trim() === ''  ) {
+        throw new Error( `Payment provider with ID: ${providerID} must have an environment defined.` );
+      }
+
+      /* Check that an array of currencies was provided */
+      if ( !provider.currencies || !provider.currencies.length  ) {
+        throw new Error( `Payment provider with ID: ${providerID} must have an array of currencies defined with at least one currency present.` );
+      }
+
+      /* Check that options were provided */
+      if ( !provider.options ) {
+        throw new Error( `Payment provider with ID: ${providerID} must have options defined.` );
+      }
+    });
+
     /* Load the payment providers */
     this.loadPaymentProviders();
   }
