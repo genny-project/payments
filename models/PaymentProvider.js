@@ -19,6 +19,11 @@ class PaymentProvider {
     return this.config.currencies;
   }
 
+  /* Returns the environment we are operating in */
+  getEnvironment() {
+    return this.config.environment;
+  }
+
   /* Returns whether or not this payment provider supports direct payments */
   supportsDirect() {
     return true;

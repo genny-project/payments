@@ -9,7 +9,18 @@ class AssemblyPayments extends PaymentProvider {
     return false;
   }
 
-  addUser({ user, dryRun }) {
+  getURL() {
+    switch( this.getEnvironment()) {
+      case 'test':
+        return 'https://test.api.promisepay.com';
+      case 'live':
+        return 'https://secure.api.promisepay.com';
+      default:
+        return 'https://test.api.promisepay.com';
+    }
+  }
+
+  async addUser({ user, dryRun }) {
     /* Get the provided data from the user */
     const { _id, firstName, lastName, phoneNumber, email, address, ...rest } = user;
 
@@ -34,8 +45,15 @@ class AssemblyPayments extends PaymentProvider {
       throw new Error( 'A valid country code must be provided.' );
     }
 
-    console.log( user );
-    console.log( dryRun );
+    console.log( this.getURL());
+
+    /* If this is a dry run stop processing */
+    if ( dryRun ) {
+      return true;
+    }
+
+    /* Create the user in Assembly */
+
   }
 }
 
