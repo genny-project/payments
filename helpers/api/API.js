@@ -4,13 +4,13 @@ const apiConfig = require( '../../config/api' );
 const Logger = require( '../logging/Logger' );
 const bodyParser = require( 'body-parser' );
 const cors = require( 'cors' );
-const injectUser = require( '../../middlewares/auth/injectUser' );
+const injectTenant = require( '../../middlewares/auth/injectTenant' );
 
 /* Create a new express app and listen on the specified port */
 const app = express();
 
-/* Add inject user request */
-app.use( injectUser );
+/* Add inject tenant middleware */
+app.use( injectTenant );
 
 /* Accept JSON request bodies */
 app.use( bodyParser.json());
