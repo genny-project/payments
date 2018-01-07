@@ -16,6 +16,11 @@ class PaymentProviderFactory {
     return this.providers[ id ];
   }
 
+  /* Returns whether or not a payment provider with the specified ID exists */
+  hasProvider( id ) {
+    return this.getProvider( id ) != null;
+  }
+
   /* Attempts to load a new payment provider with the specified ID */
   loadPaymentProvider( id ) {
     /* Check that we haven't already loaded this payment provider */

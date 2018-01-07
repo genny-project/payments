@@ -16,7 +16,7 @@ class TenantConfigLoader {
       this.config.forEach( tenantData => {
         try {
           const tenant = new Tenant( tenantData );
-          Logger.info( `Successfully valided tenant with ID: ${tenant.getID()}` );
+          Logger.info( `Successfully validated tenant with ID: ${tenant.getID()}` );
 
           /* Store the tenant */
           this.tenants.push( tenant );
