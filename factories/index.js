@@ -1,3 +1,4 @@
 module.exports = {
-  UserFactory: require( './UserFactory' )
+  UserFactory: require( './UserFactory' ),
+  PaymentProviderFactory: require( './PaymentProviderFactory' ),
 };

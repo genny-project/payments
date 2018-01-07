@@ -9,14 +9,20 @@ module.exports = [
     providers: {
       assembly: {
         environment: 'test',
-        auth: {
-          username: 'payments@example.com',
-          password: 'roadrunner'
+        currencies: ['AUD'],
+        options: {
+          auth: {
+            username: 'payments@example.com',
+            password: 'roadrunner'
+          }
         }
       },
-      xrp: {
+      ripple: {
         environment: 'test',
-        address: 'rst4UovrQADinerk7D6Biw6UjaLu1dWDro'
+        currencies: ['XRP'],
+        options: {
+          address: 'rst4UovrQADinerk7D6Biw6UjaLu1dWDro'
+        }
       }
     },
     accessTokens: [
