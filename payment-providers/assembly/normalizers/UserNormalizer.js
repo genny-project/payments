@@ -11,6 +11,8 @@ class UserNormalizer {
         fullName: user.full_name,
         firstName: user.first_name,
         lastName: user.last_name,
+        dob: user.dob,
+        governmentNumber: user.government_number,
       },
       createdAt: new Date( user.created_at ),
       updatedAt: new Date ( user.updated_at ),
@@ -19,6 +21,11 @@ class UserNormalizer {
         mobile: user.mobile,
       },
       location: user.location,
+      kyc: {
+        verificationStatus: user.verification_state,
+        heldState: user.held_state,
+      },
+      roles: user.roles,
     };
   }
 }

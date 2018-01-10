@@ -23,8 +23,7 @@ class AssemblyPayments extends PaymentProvider {
   }
 
   async getUsers({ options }) {
-    /* Create the user in Assembly */
-    console.log( options );
+    /* Get a list of users from Assembly */
     try {
       const response = await axios({
         method: 'get',
@@ -42,9 +41,50 @@ class AssemblyPayments extends PaymentProvider {
         }
       };
     } catch ( e ) {
+      console.log( e );
       return {
-        status: e.response.status,
-        data: e.response.data,
+        status: e.response ? e.response.status : 500,
+        data: e.response ? e.response.data : { error: 'An unexpected error has occured' },
+      };
+    }
+  }
+
+  async createUser({ user }) {
+    /* Creates a user */
+    try {
+      const response = await axios({
+        method: 'post',
+        url: `${this.getURL()}/users`,
+        auth: this.getOptions().auth,
+        data: {
+          id: user && user.id,
+          first_name: user && user.personalInfo && user.personalInfo.firstName,
+          last_name: user && user.personalInfo && user.personalInfo.lastName,
+          email: user && user.personalInfo && user.personalInfo.email,
+          mobile: user && user.contactInfo && user.contactInfo.mobile,
+          address_line1: user && user.location && user.location.addressLine1,
+          address_line2: user && user.location && user.location.addressLine2,
+          city: user && user.location && user.location.city,
+          state: user && user.location && user.location.state,
+          zip: user && user.location && user.location.postcode,
+          country: user && user.location && user.location.country,
+          dob: user && user.personalInfo && user.personalInfo.dob,
+          government_number: user && user.personalInfo && user.personalInfo.governmentNumber,
+        },
+      });
+
+      console.log( response );
+
+      /* Standardise the response */
+      return {
+        status: 200,
+        data: response.data.users && new UserNormalizer( response.data.users ).normalize(),
+      };
+    } catch ( e ) {
+      console.log( e );
+      return {
+        status: e.response ? e.response.status : 500,
+        data: e.response ? e.response.data : { error: 'An unexpected error has occured' },
       };
     }
   }
