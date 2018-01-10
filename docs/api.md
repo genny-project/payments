@@ -1,6 +1,8 @@
 # API
 This documents details example requests to the API
 
+---
+
 ### Create user
 Creates a new user
 
@@ -57,6 +59,8 @@ Creates a new user
 | location.postcode | Assembly | string | false ||
 | location.country | Assembly | string | true | 2 or 3 character ISO standard country code |
 
+---
+
 ### Get users
 Returns a list of all the users
 
@@ -76,6 +80,8 @@ Returns a list of all the users
 | limit | Assembly | number | false | Number of records to retrieve. Max 200. Default 20. |
 | offset | Assembly | number | false | Numbers of records to offset. Used for pagination. |
 | search | Assembly | string | false | Attempts to match users based on the search string |
+
+---
 
 ### Get single user
 Retrieves a single user by ID
