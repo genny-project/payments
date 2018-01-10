@@ -103,7 +103,7 @@ Retrieves a single user by ID
 ### Update user
 Updates a user by ID
 
-```PATCH /:provider/users/:id```
+```PUT /:provider/users/:id```
 
 ##### Request body
 

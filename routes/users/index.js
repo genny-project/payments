@@ -71,7 +71,7 @@ API.get( '/:provider/users/:id', securedRoute, async( req, res ) => {
 });
 
 /* Updates the user with the specified ID */
-API.patch( '/:provider/users/:id', securedRoute, async( req, res ) => {
+API.put( '/:provider/users/:id', securedRoute, async( req, res ) => {
   /* Get the tenant who made this request */
   const tenant = req.tenant;
 
