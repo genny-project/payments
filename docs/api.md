@@ -2,12 +2,18 @@
 This documents details example requests to the API
 
 ### Create user
+Creates a new user
+
 ```POST /:provider/users```
+
+##### Supported providers
 
 | Providers | Supported |
 | ----------| --------- |
 | Assembly | Yes |
 | Ripple | No |
+
+##### Request body
 
 ```json
 {
@@ -33,6 +39,8 @@ This documents details example requests to the API
 }
 ```
 
+##### Fields
+
 | Field | Provider | Format | Required | Notes |
 | ----- | -------- | ------ | -------- | ----- |
 | id | Assembly | string | true | Must be unique and cannot contain '.'  |
@@ -47,3 +55,39 @@ This documents details example requests to the API
 | location.city | Assembly | string | false ||
 | location.state | Assembly | string | false | Assembly don't specific a format, both VIC and Victoria work, however would recommend use of VIC (abbreviations) |
 | location.postcode | Assembly | string | false ||
+| location.country | Assembly | string | true | 2 or 3 character ISO standard country code |
+
+### Get users
+Returns a list of all the users
+
+```GET /:provider/users```
+
+##### Supported providers
+
+| Providers | Supported |
+| --------- | --------- |
+| Assembly | Yes |
+| Ripple | No |
+
+##### URL Parameters
+
+| Field | Provider | Format | Required | Notes |
+| ----- | -------- | ------ | -------- | ----- |
+| limit | Assembly | number | false | Number of records to retrieve. Max 200. Default 20. |
+| offset | Assembly | number | false | Numbers of records to offset. Used for pagination. |
+| search | Assembly | string | false | Attempts to match users based on the search string |
+
+### Get single user
+Retrieves a single user by ID
+
+```GET /:provider/users/:id```
+
+| Providers | Supported |
+| --------- | --------- |
+| Assembly | Yes |
+| Ripple | No |
+
+##### URL Parameters
+| Field | Provider | Format | Required | Notes |
+| ----- | -------- | ------ | -------- | ----- |
+| id | Assembly | string | true ||
