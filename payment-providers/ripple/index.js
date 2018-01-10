@@ -19,10 +19,6 @@ class Ripple extends PaymentProvider {
         return 'wss://s.altnet.rippletest.net:51233';
     }
   }
-
-  addUser() {
-    console.log( this.getURL());
-  }
 }
 
 module.exports = Ripple;

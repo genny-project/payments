@@ -1,3 +1,5 @@
+const Errors = require( '../helpers/errors' );
+
 /* eslint no-unused-vars: 0 */
 class PaymentProvider {
   constructor( config ) {
@@ -39,14 +41,25 @@ class PaymentProvider {
     return true;
   }
 
+  /* Returns a list of users */
+  async getUsers({ options }) {
+    return Errors.NOT_IMPLEMENTED;
+  }
+
   /* Creates a new user within this payment provider */
-  async addUser({ user, dryRun }) {}
+  async createUser({ user }) {
+    return Errors.NOT_IMPLEMENTED;
+  }
 
   /* Updates a user within this payment provider */
-  async updateUser({ user, dryRun }) {}
+  async updateUser({ user }) {
+    return Errors.NOT_IMPLEMENTED;
+  }
 
   /* Removes a user within this payment provider */
-  async removeUser({ user, dryRun }) {}
+  async removeUser({ user }) {
+    return Errors.NOT_IMPLEMENTED;
+  }
 }
 
 module.exports = PaymentProvider;
