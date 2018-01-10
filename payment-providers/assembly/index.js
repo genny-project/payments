@@ -41,7 +41,31 @@ class AssemblyPayments extends PaymentProvider {
         }
       };
     } catch ( e ) {
-      console.log( e );
+      return {
+        status: e.response ? e.response.status : 500,
+        data: e.response ? e.response.data : { error: 'An unexpected error has occured' },
+      };
+    }
+  }
+
+  async getUser({ id }) {
+    /* Get the user with the specified ID from Assembly */
+    try {
+      const response = await axios({
+        method: 'get',
+        url: `${this.getURL()}/users/${id}`,
+        auth: this.getOptions().auth,
+      });
+
+      /* Standardise the response */
+      return {
+        status: 200,
+        data: {
+          users: response.data.users && new UserNormalizer( response.data.users ).normalize(),
+          meta: response.data.meta,
+        }
+      };
+    } catch ( e ) {
       return {
         status: e.response ? e.response.status : 500,
         data: e.response ? e.response.data : { error: 'An unexpected error has occured' },
@@ -73,15 +97,12 @@ class AssemblyPayments extends PaymentProvider {
         },
       });
 
-      console.log( response );
-
       /* Standardise the response */
       return {
         status: 200,
         data: response.data.users && new UserNormalizer( response.data.users ).normalize(),
       };
     } catch ( e ) {
-      console.log( e );
       return {
         status: e.response ? e.response.status : 500,
         data: e.response ? e.response.data : { error: 'An unexpected error has occured' },
