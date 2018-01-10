@@ -84,7 +84,7 @@ class AssemblyPayments extends PaymentProvider {
           id: user && user.id,
           first_name: user && user.personalInfo && user.personalInfo.firstName,
           last_name: user && user.personalInfo && user.personalInfo.lastName,
-          email: user && user.personalInfo && user.personalInfo.email,
+          email: user && user.contactInfo && user.contactInfo.email,
           mobile: user && user.contactInfo && user.contactInfo.mobile,
           address_line1: user && user.location && user.location.addressLine1,
           address_line2: user && user.location && user.location.addressLine2,
