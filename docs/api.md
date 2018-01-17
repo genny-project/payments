@@ -186,3 +186,103 @@ Retrieves a single company by ID
 | id | Assembly | string | true ||
 
 ---
+
+### Create company
+Creates a new company
+
+`POST /:provider/companies`
+
+##### Request body
+
+```json
+{
+  "name": "Acme",
+  "legalName": "Acme Corp",
+  "taxNumber": "1234567890",
+  "chargesTax": true,
+  "contactInfo": {
+    "phone": "+61388888888"
+  },
+  "location": {
+    "addressLine1": "Acme Corp",
+    "addressLine2": "27 Fake Street",
+    "city": "Melbourne",
+    "state": "VIC",
+    "postcode": "3000",
+    "country": "AU"
+  },
+  "user": {
+    "id": "123"
+  }
+}
+```
+
+##### Fields
+
+| Field | Provider | Format | Required | Notes |
+| ----- | -------- | ------ | -------- | ----- |
+| name | Assembly | string | false ||
+| legalName | Assembly | string | false ||
+| taxNumber | Assembly | string | false | The ACN / ABN of the business |
+| chargesTax | Assembly | boolean | false ||
+| contactInfo.phone | Assembly | string | false | Must be in international number format |
+| location.addressLine1 | Assembly | string | false ||
+| location.addressLine2 | Assembly | string | false ||
+| location.city | Assembly | string | false ||
+| location.state | Assembly | string | false | Assembly don't specific a format, both VIC and Victoria work, however would recommend use of VIC (abbreviations) |
+| location.postcode | Assembly | string | false ||
+| location.country | Assembly | string | true | 2 or 3 character ISO standard country code |
+| user.id | Assembly | string | true | The ID of the user who owns this company |
+
+---
+
+### Update company
+Updates the details of the company with the specified ID
+
+`POST /:provider/companies/:id`
+
+##### Request body
+
+```json
+{
+  "id": "c3d4565476kko6575645",
+  "name": "Acme",
+  "legalName": "Acme Corp",
+  "taxNumber": "1234567890",
+  "chargesTax": true,
+  "contactInfo": {
+    "phone": "+61388888888"
+  },
+  "location": {
+    "addressLine1": "Acme Corp",
+    "addressLine2": "27 Fake Street",
+    "city": "Melbourne",
+    "state": "VIC",
+    "postcode": "3000",
+    "country": "AU"
+  },
+  "user": {
+    "id": "123"
+  }
+}
+```
+
+##### Fields
+
+| Field | Provider | Format | Required | Notes |
+| ----- | -------- | ------ | -------- | ----- |
+| id | Assembly | string | true ||
+| name | Assembly | string | false ||
+| legalName | Assembly | string | false ||
+| taxNumber | Assembly | string | false | The ACN / ABN of the business |
+| chargesTax | Assembly | boolean | false ||
+| contactInfo.phone | Assembly | string | false | Must be in international number format |
+| location.addressLine1 | Assembly | string | false ||
+| location.addressLine2 | Assembly | string | false ||
+| location.city | Assembly | string | false ||
+| location.state | Assembly | string | false | Assembly don't specific a format, both VIC and Victoria work, however would recommend use of VIC (abbreviations) |
+| location.postcode | Assembly | string | false ||
+| location.country | Assembly | string | false | 2 or 3 character ISO standard country code |
+| user.id | Assembly | string | false | The ID of the user who owns this company |
+
+---
