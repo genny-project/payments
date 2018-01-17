@@ -17,6 +17,9 @@ class CompanyNormalizer {
       },
       contactInfo: {
         phone: company.phone,
+      },
+      user: {
+        id: company.user_id
       }
     };
   }

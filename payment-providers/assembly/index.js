@@ -234,6 +234,43 @@ class AssemblyPayments extends PaymentProvider {
       };
     }
   }
+
+  async createCompany({ company }) {
+    /* updates the company */
+    try {
+      const response = await axios({
+        method: 'post',
+        url: `${this.getURL()}/companies`,
+        auth: this.getOptions().auth,
+        data: {
+          id: company && company.id,
+          name: company && company.name,
+          legal_name: company && company.legalName,
+          tax_number: company && company.taxNumber,
+          charge_tax: company && company.chargesTax,
+          address_line1: company && company.location && company.location.addressLine1,
+          address_line2: company && company.location && company.location.addressLine2,
+          city: company && company.location && company.location.city,
+          state: company && company.location && company.location.state,
+          zip: company && company.location && company.location.postcode,
+          country: company && company.location && company.location.country,
+          phone: company && company.contactInfo && company.contactInfo.phone,
+          user_id: company && company.user && company.user.id,
+        },
+      });
+
+      /* Standardise the response */
+      return {
+        status: 200,
+        data: response.data.companies && new CompanyNormalizer( response.data.companies ).normalize(),
+      };
+    } catch ( e ) {
+      return {
+        status: e.response ? e.response.status : 500,
+        data: e.response ? e.response.data : { error: 'An unexpected error has occured' },
+      };
+    }
+  }
 }
 
 module.exports = AssemblyPayments;
