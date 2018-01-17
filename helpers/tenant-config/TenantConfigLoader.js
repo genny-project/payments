@@ -9,7 +9,7 @@ class TenantConfigLoader {
 
     /* Attempt to load the configuration from file */
     try {
-      this.config = require( '../../tenants.js' );
+      this.config = process.env.LOAD_METHOD === 'ENV' ? require( '../../tenants.env.js' ) : require( '../../tenants.js' );
       Logger.info( 'Tenant configuration file loaded successfully' );
 
       /* Attempt to validate all the tenants in the configuration file straight away */
