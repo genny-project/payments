@@ -162,7 +162,32 @@ class AssemblyPayments extends PaymentProvider {
       return {
         status: 200,
         data: {
-          companies: response.data.companies && response.data.companies.map( u => new CompanyNormalizer( u ).normalize()),
+          companies: response.data.companies && response.data.companies.map( c => new CompanyNormalizer( c ).normalize()),
+          meta: response.data.meta,
+        }
+      };
+    } catch ( e ) {
+      return {
+        status: e.response ? e.response.status : 500,
+        data: e.response ? e.response.data : { error: 'An unexpected error has occured' },
+      };
+    }
+  }
+
+  async getCompany({ id }) {
+    /* Get the company with the specified ID from Assembly */
+    try {
+      const response = await axios({
+        method: 'get',
+        url: `${this.getURL()}/companies/${id}`,
+        auth: this.getOptions().auth,
+      });
+
+      /* Standardise the response */
+      return {
+        status: 200,
+        data: {
+          companies: response.data.companies && new CompanyNormalizer( response.data.companies ).normalize(),
           meta: response.data.meta,
         }
       };
