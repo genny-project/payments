@@ -90,7 +90,7 @@ API.put( '/:provider/users/:id', securedRoute, async( req, res ) => {
 
   /* Updates the user */
   try {
-    const response = await provider.updateUser({ user: req.body });
+    const response = await provider.updateUser({ user: { id: req.params.id, ...req.body }});
 
     /* Set the status and return the response */
     res.status( response.status );

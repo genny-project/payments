@@ -12,8 +12,11 @@ class CompanyNormalizer {
       id: company.id,
       taxNumber: company.tax_number,
       chargesTax: company.charge_tax,
-      address: {
+      location: {
         id: company.related.address,
+      },
+      contactInfo: {
+        phone: company.phone,
       }
     };
   }
