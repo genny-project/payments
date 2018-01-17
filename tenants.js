@@ -13,7 +13,7 @@ module.exports = [
         options: {
           auth: {
             username: process.env.PAYMENTS_EMAIL,
-            password: 'YzQ2MzY4NTQ3ZThiNDc5ZTg4MTg3OTQ0NWFmYTUxOTI='
+            password: process.env.PAYMENTS_PASSWORD
           }
         }
       },
