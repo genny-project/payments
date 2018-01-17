@@ -169,3 +169,20 @@ Returns a list of all the companies
 | offset | Assembly | number | false | Numbers of records to offset. Used for pagination. |
 
 ---
+
+###  Get company by ID
+Retrieves a single company by ID
+
+`GET /:provider/companies/:id`
+
+| Providers | Supported |
+| --------- | --------- |
+| Assembly | Yes |
+| Ripple | No |
+
+##### URL Parameters
+| Field | Provider | Format | Required | Notes |
+| ----- | -------- | ------ | -------- | ----- |
+| id | Assembly | string | true ||
+
+---
