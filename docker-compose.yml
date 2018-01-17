@@ -1,5 +1,7 @@
 payments:
   build: .
+  environment:
+    - DEBUG=true
   ports:
     - "3456:3456"
   volumes:
