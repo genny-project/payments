@@ -1,6 +1,7 @@
 const { PaymentProvider } = require( '../../models' );
 const axios = require( 'axios' );
 const UserNormalizer = require( './normalizers/UserNormalizer' );
+const CompanyNormalizer = require( './normalizers/CompanyNormalizer' );
 
 class AssemblyPayments extends PaymentProvider {
   getID() {
@@ -138,6 +139,32 @@ class AssemblyPayments extends PaymentProvider {
       return {
         status: 200,
         data: response.data.users && new UserNormalizer( response.data.users ).normalize(),
+      };
+    } catch ( e ) {
+      return {
+        status: e.response ? e.response.status : 500,
+        data: e.response ? e.response.data : { error: 'An unexpected error has occured' },
+      };
+    }
+  }
+
+  async getCompanies({ options }) {
+    /* Get a list of companies from Assembly */
+    try {
+      const response = await axios({
+        method: 'get',
+        url: `${this.getURL()}/companies`,
+        auth: this.getOptions().auth,
+        params: options,
+      });
+
+      /* Standardise the response */
+      return {
+        status: 200,
+        data: {
+          companies: response.data.companies && response.data.companies.map( u => new CompanyNormalizer( u ).normalize()),
+          meta: response.data.meta,
+        }
       };
     } catch ( e ) {
       return {
