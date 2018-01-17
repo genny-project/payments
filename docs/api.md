@@ -6,7 +6,7 @@ This documents details example requests to the API
 ### Create user
 Creates a new user
 
-```POST /:provider/users```
+`POST /:provider/users`
 
 ##### Supported providers
 
@@ -64,7 +64,7 @@ Creates a new user
 ### Get users
 Returns a list of all the users
 
-```GET /:provider/users```
+`GET /:provider/users`
 
 ##### Supported providers
 
@@ -86,7 +86,7 @@ Returns a list of all the users
 ### Get single user
 Retrieves a single user by ID
 
-```GET /:provider/users/:id```
+`GET /:provider/users/:id`
 
 | Providers | Supported |
 | --------- | --------- |
@@ -103,7 +103,7 @@ Retrieves a single user by ID
 ### Update user
 Updates a user by ID
 
-```PUT /:provider/users/:id```
+`PUT /:provider/users/:id`
 
 ##### Request body
 
@@ -148,5 +148,24 @@ Updates a user by ID
 | location.state | Assembly | string | false | Assembly don't specific a format, both VIC and Victoria work, however would recommend use of VIC (abbreviations) |
 | location.postcode | Assembly | string | false ||
 | location.country | Assembly | string | false | 2 or 3 character ISO standard country code |
+
+---
+
+### Get companies
+Returns a list of all the companies
+
+`GET /:provider/companies`
+
+| Providers | Supported |
+| --------- | --------- |
+| Assembly | Yes |
+| Ripple | No |
+
+##### URL Parameters
+
+| Field | Provider | Format | Required | Notes |
+| ----- | -------- | ------ | -------- | ----- |
+| limit | Assembly | number | false | Number of records to retrieve. Max 200. Default 20. |
+| offset | Assembly | number | false | Numbers of records to offset. Used for pagination. |
 
 ---
