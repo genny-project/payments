@@ -331,6 +331,31 @@ class AssemblyPayments extends PaymentProvider {
       };
     }
   }
+
+  async getItem({ id }) {
+    /* Get the company with the specified ID from Assembly */
+    try {
+      const response = await axios({
+        method: 'get',
+        url: `${this.getURL()}/items/${id}`,
+        auth: this.getOptions().auth,
+      });
+
+      /* Standardise the response */
+      return {
+        status: 200,
+        data: {
+          items: response.data.items && new ItemNormalizer( response.data.items ).normalize(),
+          meta: response.data.meta,
+        }
+      };
+    } catch ( e ) {
+      return {
+        status: e.response ? e.response.status : 500,
+        data: e.response ? e.response.data : { error: 'An unexpected error has occured' },
+      };
+    }
+  }
 }
 
 module.exports = AssemblyPayments;
