@@ -16,6 +16,19 @@ class ItemNormalizer {
     }
   }
 
+  getReversePaymentType( type ) {
+    switch( type ) {
+      case 'escrow':
+        return 1;
+      case 'express':
+        return 2;
+      case 'escrow_partial_release':
+        return 3;
+      case 'approve':
+        return 4;
+    }
+  }
+
   normalize() {
     return {
       id: this.data.id,

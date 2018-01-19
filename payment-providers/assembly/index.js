@@ -298,6 +298,39 @@ class AssemblyPayments extends PaymentProvider {
       };
     }
   }
+
+  async createItem({ item }) {
+    /* Creates an item */
+    try {
+      const response = await axios({
+        method: 'post',
+        url: `${this.getURL()}/items`,
+        auth: this.getOptions().auth,
+        data: {
+          id: item && item.id,
+          name: item && item.name,
+          amount: item && item.amount,
+          currency: item && item.currency,
+          payment_type: new ItemNormalizer().getReversePaymentType( item.paymentType ),
+          buyer_id: item && item.buyer && item.buyer.id,
+          seller_id: item && item.seller && item.seller.id,
+          fee_ids: item && item.fees && item.fees.join( ',' ),
+          description: item && item.description,
+        },
+      });
+
+      /* Standardise the response */
+      return {
+        status: 200,
+        data: response.data.items && new ItemNormalizer( response.data.items ).normalize(),
+      };
+    } catch ( e ) {
+      return {
+        status: e.response ? e.response.status : 500,
+        data: e.response ? e.response.data : { error: 'An unexpected error has occured' },
+      };
+    }
+  }
 }
 
 module.exports = AssemblyPayments;
