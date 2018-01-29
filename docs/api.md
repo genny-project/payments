@@ -309,4 +309,33 @@ Returns auth tokens used by front end clients to authenticate with a payment pro
 | Field | Provider | Format | Required | Notes |
 | ----- | -------- | ------ | -------- | ----- |
 | type | Assembly | string | true | Either "card" or "bank" |
-| user.id | Assembly | string | true |||
+| user.id | Assembly | string | true | ID of the user for which these tokens are for. |
+
+---
+
+### Make Item Payment
+Makes a payment against the specified item.
+
+`POST /:provider/items/:id/payment`
+
+#### Request body
+
+```json
+{
+  "id": "sdf4w598dscx67as9rewrssdfw435",
+  "account": {
+    "id": "dgfs908643okjzdvjkl124"
+  },
+  "ipAddress": "123.456.7.89",
+  "deviceID": "ouipsfe3548fsdjkl1209ufsd09uert0"
+}
+```
+
+##### Fields
+
+| Field | Provider | Format | Required | Notes |
+| ----- | -------- | ------ | -------- | ----- |
+| id | Assembly | string | true | ID of the item we are making a payment against. |
+| account.id | Assembly | string | true | ID of the payment method the user is wanting to use. |
+| ipAddress | Assembly | string | true | IP address of the user (provided by Assembly SDK) |
+| deviceID | Assembly | string | true | Device ID of the user (provided by Assembly SDK) |
