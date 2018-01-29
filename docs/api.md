@@ -421,6 +421,6 @@ Creates a fee ID
 | cap | Assembly | string | false | Cap of the fee in cents (for percentage fees). |
 | min | Assembly | string | false | Minimum fee in cents |
 | max | Assembly | string | false | Maximum fee in cents |
-| to | Assembly | string | false | Who pays the fee. Allowed values are buyer, seller, cc, int_wire |
+| to | Assembly | string | true | Who pays the fee. Allowed values are buyer, seller, cc, int_wire |
 
 ---
