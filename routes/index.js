@@ -8,6 +8,7 @@ require( './tenants' );
 require( './me' );
 require( './payment-providers' );
 require( './items' );
+require( './tokens' );
 
 /* Define index routes */
 API.get( '/', ( req, res ) => {

@@ -3,6 +3,7 @@ const axios = require( 'axios' );
 const UserNormalizer = require( './normalizers/UserNormalizer' );
 const CompanyNormalizer = require( './normalizers/CompanyNormalizer' );
 const ItemNormalizer = require( './normalizers/ItemNormalizer' );
+const TokenNormalizer = require( './normalizers/TokenNormalizer' );
 
 class AssemblyPayments extends PaymentProvider {
   getID() {
@@ -348,6 +349,32 @@ class AssemblyPayments extends PaymentProvider {
           items: response.data.items && new ItemNormalizer( response.data.items ).normalize(),
           meta: response.data.meta,
         }
+      };
+    } catch ( e ) {
+      return {
+        status: e.response ? e.response.status : 500,
+        data: e.response ? e.response.data : { error: 'An unexpected error has occured' },
+      };
+    }
+  }
+
+  async getTokens({ type, user }) {
+    /* Get the token */
+    try {
+      const response = await axios({
+        method: 'post',
+        url: `${this.getURL()}/token_auths`,
+        auth: this.getOptions().auth,
+        data: {
+          token_type: type,
+          user_id: user && user.id,
+        },
+      });
+
+      /* Standardise the response */
+      return {
+        status: 200,
+        data: response.data.token_auth && new TokenNormalizer( response.data.token_auth ).normalize(),
       };
     } catch ( e ) {
       return {
