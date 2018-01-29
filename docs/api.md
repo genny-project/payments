@@ -286,3 +286,27 @@ Updates the details of the company with the specified ID
 | user.id | Assembly | string | false | The ID of the user who owns this company |
 
 ---
+
+
+### Get tokens
+Returns auth tokens used by front end clients to authenticate with a payment provider directly.
+
+`POST /:provider/tokens`
+
+##### Request body
+
+```json
+{
+  "type": "bank",
+  "user": {
+    "id": "123"
+  }
+}
+```
+
+##### Fields
+
+| Field | Provider | Format | Required | Notes |
+| ----- | -------- | ------ | -------- | ----- |
+| type | Assembly | string | true | Either "card" or "bank" |
+| user.id | Assembly | string | true |||
