@@ -4,6 +4,7 @@ const UserNormalizer = require( './normalizers/UserNormalizer' );
 const CompanyNormalizer = require( './normalizers/CompanyNormalizer' );
 const ItemNormalizer = require( './normalizers/ItemNormalizer' );
 const TokenNormalizer = require( './normalizers/TokenNormalizer' );
+const FeeNormalizer = require( './normalizers/FeeNormalizer' );
 
 class AssemblyPayments extends PaymentProvider {
   getID() {
@@ -428,6 +429,37 @@ class AssemblyPayments extends PaymentProvider {
       return {
         status: 200,
         data: response.data.items && new ItemNormalizer( response.data.items ).normalize(),
+      };
+    } catch ( e ) {
+      return {
+        status: e.response ? e.response.status : 500,
+        data: e.response ? e.response.data : { error: 'An unexpected error has occured' },
+      };
+    }
+  }
+
+  async createFee({ name, type, amount, cap, min, max, to }) {
+    /* Creates a fee */
+    try {
+      const response = await axios({
+        method: 'post',
+        url: `${this.getURL()}/fees`,
+        auth: this.getOptions().auth,
+        data: {
+          name,
+          fee_type_id: type,
+          amount,
+          cap,
+          min,
+          max,
+          to,
+        },
+      });
+
+      /* Standardise the response */
+      return {
+        status: 200,
+        data: response.data.fees && new FeeNormalizer( response.data.fees ).normalize(),
       };
     } catch ( e ) {
       return {
