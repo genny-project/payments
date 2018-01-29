@@ -349,3 +349,21 @@ Releases the payment for an item
 `POST /:provider/items/:id/release-payment`
 
 ---
+
+### Create Fee ID
+Creates a fee ID
+
+`POST /:provider/fees`
+
+##### Request body
+
+```json
+{
+  "name": "Name of fee",
+  "type": 1,
+  "amount": 1000,
+  "cap": null,
+  "min": null,
+  "max": null,
+  "to": "buyer"
+}
