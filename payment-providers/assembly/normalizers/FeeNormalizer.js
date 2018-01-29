@@ -7,6 +7,9 @@ class FeeNormalizer {
     const fee = this.data;
 
     return {
+      id: fee.id,
+      createdAt: fee.created_at,
+      updatedAt: fee.updated_at,
       name: fee.name,
       type: fee.fee_type_id,
       amount: fee.amount,
