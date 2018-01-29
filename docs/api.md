@@ -313,6 +313,48 @@ Returns auth tokens used by front end clients to authenticate with a payment pro
 
 ---
 
+### Create Item
+Creates a new item
+
+`POST /:provider/items`
+
+##### Request Body
+
+```json
+{
+  "id": "abc123",
+  "name": "10T Container",
+  "amount": "25000",
+  "currency": "AUD",
+  "paymentType": "escrow",
+  "buyer": {
+    "id": "295496932923"
+  },
+  "seller": {
+    "id": "439067934592"
+  },
+  "fees": [ "2304065034032" ],
+  "description": "Shipping for a 10T Container"
+}
+```
+
+##### Fields
+
+| Field | Provider | Format | Required | Notes |
+| ----- | -------- | ------ | -------- | ----- |
+| id | Assembly | string | true ||
+| name | Assembly | string | true | Name of item |
+| amount | Assembly | string | true | Value of the item in cents |
+| currency | Assembly | string | true ||
+| paymentType | Assembly | string | true | Valid values are escrow, express, escrow_partial_release, approve |
+| buyer.id | Assembly | string | true | The ID of the buyer for this item |
+| seller.id | Assembly | string | true | The ID of the seller for this item |
+| fees | Assembly | array | true | An array of fee IDs that have been generated |
+| description | Assembly | array | false | A description of the item |
+
+---
+
+
 ### Make Item Payment
 Makes a payment against the specified item.
 
@@ -367,3 +409,18 @@ Creates a fee ID
   "max": null,
   "to": "buyer"
 }
+```
+
+##### Fields
+
+| Field | Provider | Format | Required | Notes |
+| ----- | -------- | ------ | -------- | ----- |
+| name | Assembly | string | true | Name of the fee you are creating. |
+| type | Assembly | string | true | Type of fee you are creating. 1 = Fixed, 2 = Percentage, 3 = Percentage with Cap, 4 = Percentage with Min |
+| amount | Assembly | string | false | The amount of the fee in cents. Only required if type = 1 |
+| cap | Assembly | string | false | Cap of the fee in cents (for percentage fees). |
+| min | Assembly | string | false | Minimum fee in cents |
+| max | Assembly | string | false | Maximum fee in cents |
+| to | Assembly | string | false | Who pays the fee. Allowed values are buyer, seller, cc, int_wire |
+
+---
