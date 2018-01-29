@@ -339,3 +339,13 @@ Makes a payment against the specified item.
 | account.id | Assembly | string | true | ID of the payment method the user is wanting to use. |
 | ipAddress | Assembly | string | true | IP address of the user (provided by Assembly SDK) |
 | deviceID | Assembly | string | true | Device ID of the user (provided by Assembly SDK) |
+
+---
+
+
+### Release Item Payment
+Releases the payment for an item
+
+`POST /:provider/items/:id/release-payment`
+
+---
