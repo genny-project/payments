@@ -104,6 +104,40 @@ API.put( '/:provider/users/:id', securedRoute, async( req, res ) => {
   }
 });
 
+/* Sets the disbursment account for a user */
+API.put( '/:provider/users/:id/disbursment-account', securedRoute, async( req, res ) => {
+  /* Get the tenant who made this request */
+  const tenant = req.tenant;
+
+  /* Get the provider ID */
+  const providerID = req.params.provider;
+
+  /* Get the provider */
+  const provider = tenant.getProvider( providerID );
+
+  /* Check that the provider exists */
+  if ( !provider ) {
+    res.status( 404 );
+    res.json({ error: 'Provider not found.' });
+    return;
+  }
+
+  /* Update the users disbursment account */
+  try {
+    const response = await provider.updateUserDisbursementAccount({ user: req.params.id, account: req.body.account });
+
+    /* Set the status and return the response */
+    res.status( response.status );
+    res.json( response.data );
+    return;
+  } catch ( e ) {
+    /* There was an error */
+    res.status( e.status );
+    res.json( e.data );
+    return;
+  }
+});
+
 /* Creates a new user */
 API.post( '/:provider/users', securedRoute, async( req, res ) => {
   /* Get the tenant who made this request */

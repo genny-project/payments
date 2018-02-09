@@ -424,3 +424,23 @@ Creates a fee ID
 | to | Assembly | string | true | Who pays the fee. Allowed values are buyer, seller, cc, int_wire |
 
 ---
+
+### Set Disbursement Account
+Set the disbursement account for the user
+
+`PUT /:provider/users/:id/disbursement-account`
+
+#### Request body
+```json
+{
+  "account": {
+    "id": "dkjgsxdkfesw345fidsfdsf"
+  }
+}
+```
+
+##### Fields
+
+| Field | Provider | Format | Required | Notes |
+| ----- | -------- | ------ | -------- | ----- |
+| account.id | Assembly | string | true | ID of the payment method the user is wanting to use. |

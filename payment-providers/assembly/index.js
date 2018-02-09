@@ -468,6 +468,32 @@ class AssemblyPayments extends PaymentProvider {
       };
     }
   }
+
+  async updateUserDisbursementAccount({ user, account }) {
+    /* Update the users disbursment account */
+    try {
+      const response = await axios({
+        method: 'patch',
+        url: `${this.getURL()}/users/${user}/disbursement_account`,
+        auth: this.getOptions().auth,
+        data: {
+          id: user,
+          account_id: account && account.id,
+        },
+      });
+
+      /* Standardise the response */
+      return {
+        status: 200,
+        data: response.data.fees && new UserNormalizer( response.data.users ).normalize(),
+      };
+    } catch ( e ) {
+      return {
+        status: e.response ? e.response.status : 500,
+        data: e.response ? e.response.data : { error: 'An unexpected error has occured' },
+      };
+    }
+  }
 }
 
 module.exports = AssemblyPayments;
