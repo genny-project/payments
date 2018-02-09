@@ -470,6 +470,7 @@ class AssemblyPayments extends PaymentProvider {
   }
 
   async updateUserDisbursementAccount({ user, account }) {
+    console.log( user, account );
     /* Update the users disbursment account */
     try {
       const response = await axios({
