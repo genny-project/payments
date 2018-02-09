@@ -105,7 +105,7 @@ API.put( '/:provider/users/:id', securedRoute, async( req, res ) => {
 });
 
 /* Sets the disbursment account for a user */
-API.put( '/:provider/users/:id/disbursment-account', securedRoute, async( req, res ) => {
+API.put( '/:provider/users/:id/disbursement-account', securedRoute, async( req, res ) => {
   /* Get the tenant who made this request */
   const tenant = req.tenant;
 
