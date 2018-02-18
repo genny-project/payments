@@ -444,3 +444,28 @@ Set the disbursement account for the user
 | Field | Provider | Format | Required | Notes |
 | ----- | -------- | ------ | -------- | ----- |
 | account.id | Assembly | string | true | ID of the payment method the user is wanting to use. |
+
+---
+
+### Creates a payment authority for a bank account
+Creates a payment authority for the specified bank account. A payment authority must be created before
+a bank account can be used on some payment providers (Assembly).
+
+`POST /:provider/payment-authority`
+
+#### Request body
+```json
+{
+  "account": {
+    "id": "dkjgsxdkfesw345fidsfdsf"
+  },
+  "amount": 1000
+}
+```
+
+##### Fields
+
+| Field | Provider | Format | Required | Notes |
+| ----- | -------- | ------ | -------- | ----- |
+| account.id | Assembly | string | true | ID of the payment method the user is wanting to use. |
+| amount | Assembly | string | true | Value of the item in cents |

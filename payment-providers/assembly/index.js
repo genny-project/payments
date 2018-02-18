@@ -5,6 +5,7 @@ const CompanyNormalizer = require( './normalizers/CompanyNormalizer' );
 const ItemNormalizer = require( './normalizers/ItemNormalizer' );
 const TokenNormalizer = require( './normalizers/TokenNormalizer' );
 const FeeNormalizer = require( './normalizers/FeeNormalizer' );
+const PaymentAuthorityNormalizer = require( './normalizers/PaymentAuthorityNormalizer' );
 
 class AssemblyPayments extends PaymentProvider {
   getID() {
@@ -470,7 +471,6 @@ class AssemblyPayments extends PaymentProvider {
   }
 
   async updateUserDisbursementAccount({ user, account }) {
-    console.log( user, account );
     /* Update the users disbursment account */
     try {
       const response = await axios({
@@ -487,6 +487,32 @@ class AssemblyPayments extends PaymentProvider {
       return {
         status: 200,
         data: response.data.fees && new UserNormalizer( response.data.users ).normalize(),
+      };
+    } catch ( e ) {
+      return {
+        status: e.response ? e.response.status : 500,
+        data: e.response ? e.response.data : { error: 'An unexpected error has occured' },
+      };
+    }
+  }
+
+  async createPaymentAuthority({ account, amount }) {
+    /* Creates a direct debit authority */
+    try {
+      const response = await axios({
+        method: 'post',
+        url: `${this.getURL()}/direct_debit_authorities`,
+        auth: this.getOptions().auth,
+        data: {
+          amount,
+          account_id: account && account.id,
+        },
+      });
+
+      /* Standardise the response */
+      return {
+        status: 200,
+        data: response.data.fees && new PaymentAuthorityNormalizer( response.data.direct_debit_authorities ).normalize(),
       };
     } catch ( e ) {
       return {
