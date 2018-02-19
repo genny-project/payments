@@ -1,0 +1,12 @@
+life/genny/routes/VersionHandler.class
+life/genny/security/SecureResources.class
+life/genny/channels/EBCHandlers$1.class
+life/genny/verticle/ServiceVerticle.class
+life/genny/verticle/DateTimeDeserializer.class
+life/genny/channels/EBProducers.class
+life/genny/routes/PropertiesJsonDeserializer.class
+life/genny/cluster/Cluster.class
+life/genny/channels/EBConsumers.class
+life/genny/cluster/ClusterConfig.class
+life/genny/routes/Routers.class
+life/genny/channels/EBCHandlers.class

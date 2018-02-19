@@ -17,6 +17,7 @@ class AssemblyPayments extends PaymentProvider {
   }
 
   getURL() {
+    console.log(this.getOptions().auth);
     switch( this.getEnvironment()) {
       case 'test':
         return 'https://test.api.promisepay.com';
