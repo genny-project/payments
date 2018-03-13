@@ -469,3 +469,19 @@ a bank account can be used on some payment providers (Assembly).
 | ----- | -------- | ------ | -------- | ----- |
 | account.id | Assembly | string | true | ID of the payment method the user is wanting to use. |
 | amount | Assembly | string | true | Value of the item in cents |
+
+---
+
+### Delete bank account
+Removes a bank account from the system
+
+`DELETE /:provider/bank-accounts/:id`
+
+---
+
+### Delete card account
+Removes a card account from the system
+
+`DELETE /:provider/card-accounts/:id`
+
+---

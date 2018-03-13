@@ -521,6 +521,50 @@ class AssemblyPayments extends PaymentProvider {
       };
     }
   }
+
+  async deleteBankAccount( id ) {
+    /* Delete the bank account */
+    try {
+      const response = await axios({
+        method: 'delete',
+        url: `${this.getURL()}/bank_accounts/${id}`,
+        auth: this.getOptions().auth,
+      });
+
+      /* Standardise the response */
+      return {
+        status: 200,
+        data: response.data,
+      };
+    } catch ( e ) {
+      return {
+        status: e.response ? e.response.status : 500,
+        data: e.response ? e.response.data : { error: 'An unexpected error has occured' },
+      };
+    }
+  }
+
+  async deleteCardAccount( id ) {
+    /* Delete the card account */
+    try {
+      const response = await axios({
+        method: 'delete',
+        url: `${this.getURL()}/card_accounts/${id}`,
+        auth: this.getOptions().auth,
+      });
+
+      /* Standardise the response */
+      return {
+        status: 200,
+        data: response.data,
+      };
+    } catch ( e ) {
+      return {
+        status: e.response ? e.response.status : 500,
+        data: e.response ? e.response.data : { error: 'An unexpected error has occured' },
+      };
+    }
+  }
 }
 
 module.exports = AssemblyPayments;

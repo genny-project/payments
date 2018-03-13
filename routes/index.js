@@ -10,7 +10,9 @@ require( './payment-providers' );
 require( './items' );
 require( './tokens' );
 require( './fees' );
-require( './payment-authority' ); 
+require( './payment-authority' );
+require( './bank-accounts' );
+require( './card-accounts' );
 
 /* Define index routes */
 API.get( '/', ( req, res ) => {
