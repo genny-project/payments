@@ -15,6 +15,9 @@ require( './payment-authority' );
 require( './bank-accounts' );
 require( './card-accounts' );
 
+/* In the webhooks subroute */
+require( './webhooks/item' );
+
 /* Define index routes */
 API.get( '/', ( req, res ) => {
   res.json({ name: 'Payments API', version: process.env.BUILD_NUMBER });
