@@ -1,5 +1,6 @@
 /* Include dependencies */
 const API = require( '../helpers/api/API' );
+const WebhooksAPI = require( '../helpers/webhooks-api/WebhooksAPI' );
 
 /* Include the sub routes */
 require( './users' );
@@ -17,4 +18,8 @@ require( './card-accounts' );
 /* Define index routes */
 API.get( '/', ( req, res ) => {
   res.json({ name: 'Payments API', version: process.env.BUILD_NUMBER });
+});
+
+WebhooksAPI.get( '/', ( req, res ) => {
+  res.json({ name: 'Payments Webhook API', version: process.env.BUILD_NUMBER });
 });
