@@ -2,12 +2,14 @@
 const WebhooksAPI = require( '../../../helpers/webhooks-api/WebhooksAPI' );
 const Logger = require( '../../../helpers/logging/Logger' );
 const { TenantConfigLoader } = require( '../../../helpers' );
+const Formatters = require( '../../../helpers/webhook-formatters' );
+const axios = require( 'axios' );
 
 WebhooksAPI.get( '/webhooks/:provider/item', ( req, res ) => {
   res.json({ name: `Items webhook endpoint for provider ${req.params.provider}` });
 });
 
-WebhooksAPI.post( '/webhooks/:provider/item', ( req, res ) => {
+WebhooksAPI.post( '/webhooks/:provider/item', async ( req, res ) => {
   /* Get the tenant from the query parameters */
   const { tenantID } = req.query;
 
@@ -32,5 +34,24 @@ WebhooksAPI.post( '/webhooks/:provider/item', ( req, res ) => {
   }
 
   Logger.info( `Incoming item webhook for tenant with ID ${tenant.getID()} ${JSON.stringify( req.body )}` );
-  res.json({ success: true });
+
+  /* Format the webhook */
+  let formatter = Formatters.getFormatter( provider.getWebhooks().item.format );
+  const formattedData = formatter.formatItemWebhook( req.body );
+
+  /* Log the formatted data */
+  Logger.info( `Formatted webhook for tenant with ID ${tenant.getID()} ${JSON.stringify( formattedData )}` );
+
+  /* Send the http request upstream */
+  try {
+    const response = await axios.post( provider.getWebhooks().item.url, formattedData );
+    Logger.info( `Webhook upstream response ${JSON.stringify( response.data )}` );
+    res.json({ success: true });
+    return;
+  } catch ( e ) {
+    res.status( 500 );
+    Logger.error( `Webhook upstream error ${JSON.stringify( e.message )}` );
+    res.json({ error: true, errorMessage: e.message });
+    return;
+  }
 });

@@ -10,6 +10,12 @@ module.exports = [
       assembly: {
         environment: process.env.PAYMENT_MARKETPLACE_NAME,
         currencies: ['AUD'],
+        webhooks: {
+          item: {
+            url: process.env.PAYMENTS_ITEM_WEBHOOK_URL,
+            format: 'genny',
+          }
+        },
         options: {
           auth: {
             username: process.env.PAYMENTS_EMAIL,

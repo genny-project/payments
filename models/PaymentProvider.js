@@ -31,6 +31,11 @@ class PaymentProvider {
     return this.config.environment;
   }
 
+  /* Returns the webhooks */
+  getWebhooks() {
+    return this.config.webhooks;
+  }
+
   /* Returns whether or not this payment provider supports direct payments */
   supportsDirect() {
     return true;

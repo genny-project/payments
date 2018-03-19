@@ -11,6 +11,7 @@ class Tenant {
       notifications: [],
       providers: {},
       accessTokens: [],
+      webhooks: {},
       ...data,
     };
 
