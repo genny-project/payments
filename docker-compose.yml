@@ -4,6 +4,7 @@ payments:
     - DEBUG=true
   ports:
     - "3456:3456"
+    - "6543:6543"
   volumes:
     - ./:/usr/src/app
     - /usr/src/app/node_modules/
