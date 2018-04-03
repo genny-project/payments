@@ -12,7 +12,7 @@ module.exports = [
         currencies: ['AUD'],
         webhooks: {
           item: {
-            url: process.env.PAYMENTS_ITEM_WEBHOOK_URL,
+            url: process.env.REACT_APP_VERTX_SERVICE_API,
             format: 'genny',
             authentication: {
               config: {
