@@ -14,7 +14,17 @@ module.exports = [
           item: {
             url: process.env.PAYMENTS_ITEM_WEBHOOK_URL,
             format: 'genny',
-          }
+            authentication: {
+              config: {
+                realm: process.env.PAYMENTS_WEBHOOK_AUTH_REALM,
+                host: process.env.PAYMENTS_WEBHOOK_AUTH_HOST,
+                clientSecret: process.env.PAYMENTS_WEBHOOK_AUTH_CLIENT_SECRET,
+                resource: process.env.PAYMENTS_WEBHOOK_AUTH_RESOURCE,
+                username: process.env.PAYMENTS_WEBHOOK_AUTH_USERNAME,
+                password: process.env.PAYMENTS_WEBHOOK_AUTH_PASSWORD,
+              }
+            },
+          },
         },
         options: {
           auth: {

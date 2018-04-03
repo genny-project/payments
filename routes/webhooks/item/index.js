@@ -39,12 +39,15 @@ WebhooksAPI.post( '/webhooks/:provider/item', async ( req, res ) => {
   let formatter = Formatters.getFormatter( provider.getWebhooks().item.format );
   const formattedData = formatter.formatItemWebhook( req.body );
 
+  /* Get the additional webhook headers */
+  const headers = await formatter.getRequestHeaders( provider.getWebhooks().item );
+
   /* Log the formatted data */
   Logger.info( `Formatted webhook for tenant with ID ${tenant.getID()} ${JSON.stringify( formattedData )}` );
 
   /* Send the http request upstream */
   try {
-    const response = await axios.post( provider.getWebhooks().item.url, formattedData );
+    const response = await axios.post( provider.getWebhooks().item.url, formattedData, { headers });
     Logger.info( `Webhook upstream response ${JSON.stringify( response.data )}` );
     res.json({ success: true });
     return;

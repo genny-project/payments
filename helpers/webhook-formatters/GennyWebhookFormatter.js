@@ -1,3 +1,7 @@
+/* Include dependencies */
+const axios = require( 'axios' );
+const querystring = require( 'querystring' );
+
 class GennyWebhookFormatter {
   formatItemWebhook( data ) {
     let status = '';
@@ -61,6 +65,22 @@ class GennyWebhookFormatter {
       object_status: status,
       object_message: data.items.state,
     };
+  }
+
+  async getRequestHeaders({ authentication }) {
+    /* Create request config */
+    const body = {
+      grant_type: 'password',
+      client_id: authentication.config.resource,
+      username: authentication.config.username,
+      password: authentication.config.password,
+      client_secret: authentication.config.clientSecret,
+    };
+
+    /* Now we have the authentication config lets create a keycloak token */
+    const response = await axios.post( `${authentication.config.host}/auth/realms/${authentication.config.realm}/protocol/openid-connect/token`, querystring.stringify( body ));
+
+    return { Authorization: `Bearer ${response.data.access_token}` };
   }
 }
 
