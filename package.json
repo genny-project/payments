@@ -24,12 +24,17 @@
     "axios": "^0.17.1",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
+    "currency-formatter": "^1.4.2",
     "express": "^4.16.2",
     "express-error-handler": "^1.1.0",
     "express-mung": "^0.4.6",
+    "handlebars": "^4.0.11",
     "isemail": "^3.0.0",
+    "moment": "^2.22.0",
     "mongoose": "^4.13.7",
     "nodemon": "^1.12.5",
+    "phantom-html-to-pdf": "^0.5.5",
+    "phantomjs-prebuilt": "^2.1.16",
     "winston": "^3.0.0-rc1"
   }
 }

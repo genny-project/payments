@@ -1,0 +1,6 @@
+{
+  "test": {
+    "file": "test/test.html",
+    "type": "html"
+  }
+}

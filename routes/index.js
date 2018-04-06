@@ -14,6 +14,7 @@ require( './fees' );
 require( './payment-authority' );
 require( './bank-accounts' );
 require( './card-accounts' );
+require( './invoices' );
 
 /* In the webhooks subroute */
 require( './webhooks/item' );
