@@ -6,6 +6,10 @@ class RawWebhookFormatter {
   async getRequestHeaders() {
     return {};
   }
+
+  shouldSendUpstream() {
+    return true;
+  }
 }
 
 module.exports = new RawWebhookFormatter();

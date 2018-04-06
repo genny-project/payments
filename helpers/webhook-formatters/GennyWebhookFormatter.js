@@ -82,6 +82,10 @@ class GennyWebhookFormatter {
 
     return { Authorization: `Bearer ${response.data.access_token}` };
   }
+
+  shouldSendUpstream( body ) {
+    return body.items != null;
+  }
 }
 
 module.exports = new GennyWebhookFormatter();

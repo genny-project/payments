@@ -35,8 +35,19 @@ WebhooksAPI.post( '/webhooks/:provider/item', async ( req, res ) => {
 
   Logger.info( `Incoming item webhook for tenant with ID ${tenant.getID()} ${JSON.stringify( req.body )}` );
 
+  /* Get the formatter */
+  const formatter = Formatters.getFormatter( provider.getWebhooks().item.format );
+
+  /* Check whether or not we should send them one upstream */
+  const shouldSendUpstream = formatter.shouldSendUpstream( req.body );
+
+  if ( !shouldSendUpstream ) {
+    Logger.info( 'Not sending webook upstream - request', JSON.stringify( req.body ));
+    res.json({ success: true });
+    return;
+  }
+
   /* Format the webhook */
-  let formatter = Formatters.getFormatter( provider.getWebhooks().item.format );
   const formattedData = formatter.formatItemWebhook( req.body );
 
   /* Get the additional webhook headers */
