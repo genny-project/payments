@@ -17,7 +17,7 @@ module.exports = [
             authentication: {
               config: {
                 realm: process.env.PAYMENTS_WEBHOOK_AUTH_REALM,
-                host: process.env.PAYMENTS_WEBHOOK_AUTH_HOST,
+                host: process.env.KEYCLOAKURL,
                 clientSecret: process.env.PAYMENTS_WEBHOOK_AUTH_CLIENT_SECRET,
                 resource: process.env.PAYMENTS_WEBHOOK_AUTH_RESOURCE,
                 username: process.env.PAYMENTS_WEBHOOK_AUTH_USERNAME,
