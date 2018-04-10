@@ -329,9 +329,7 @@ class AssemblyPayments extends PaymentProvider {
       console.log( response );
 
       Logger.info( 'CREATE ITEM - RESPONSE' );
-      Logger.info( JSON.stringify( response, null, 2 ));
-
-
+      Logger.info( JSON.stringify( response.data, null, 2 ));
 
       /* Standardise the response */
       return {
@@ -340,7 +338,7 @@ class AssemblyPayments extends PaymentProvider {
       };
     } catch ( e ) {
       Logger.info( 'CREATE ITEM - ERROR' );
-      Logger.info( JSON.stringify( e.response.data, null, 2 ));
+      console.log( e );
 
       return {
         status: e.response ? e.response.status : 500,
