@@ -8,6 +8,11 @@ const FeeNormalizer = require( './normalizers/FeeNormalizer' );
 const PaymentAuthorityNormalizer = require( './normalizers/PaymentAuthorityNormalizer' );
 const Logger = require( '../../helpers/logging/Logger' );
 
+axios.interceptors.request.use( request => {
+  console.log( 'Starting Request', request.url, request.data );
+  return request;
+});
+
 class AssemblyPayments extends PaymentProvider {
   getID() {
     return 'assembly';
@@ -338,7 +343,6 @@ class AssemblyPayments extends PaymentProvider {
       };
     } catch ( e ) {
       Logger.info( 'CREATE ITEM - ERROR' );
-      console.log( e );
 
       return {
         status: e.response ? e.response.status : 500,
