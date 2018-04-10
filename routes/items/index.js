@@ -63,8 +63,11 @@ API.post( '/:provider/items', securedRoute, async( req, res ) => {
     res.json( response.data );
     return;
   } catch ( e ) {
+    if ( e ) {
+      console.log( e );
+    }
     /* There was an error */
-    res.status( e.status );
+    res.status( e ? e.status : 500 );
     res.json( e.data );
     return;
   }
