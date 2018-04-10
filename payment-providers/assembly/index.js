@@ -308,7 +308,7 @@ class AssemblyPayments extends PaymentProvider {
     try {
       Logger.info( 'CREATE ITEM - REQUEST' );
       Logger.info( JSON.stringify( item, null, 2 ));
-      
+
       const response = await axios({
         method: 'post',
         url: `${this.getURL()}/items`,
@@ -326,8 +326,12 @@ class AssemblyPayments extends PaymentProvider {
         },
       });
 
+      console.log( response );
+
       Logger.info( 'CREATE ITEM - RESPONSE' );
       Logger.info( JSON.stringify( response, null, 2 ));
+
+
 
       /* Standardise the response */
       return {
