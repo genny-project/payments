@@ -20,7 +20,7 @@ app.use( bodyParser.json());
 app.use( cors());
 
 /* Add logging of requests and responses if debug mode enabled */
-if ( process.env.DEBUG === 'true' ) {
+if ( process.env.DEBUG === 'true' || true ) {
   app.use( mung.json(( body, req, res ) => {
     Logger.info( `${req.method} ${req.url}` );
     Logger.info( `Request: ${JSON.stringify( req.body, null, 2 )}` );
