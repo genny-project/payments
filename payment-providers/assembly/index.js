@@ -6,6 +6,7 @@ const ItemNormalizer = require( './normalizers/ItemNormalizer' );
 const TokenNormalizer = require( './normalizers/TokenNormalizer' );
 const FeeNormalizer = require( './normalizers/FeeNormalizer' );
 const PaymentAuthorityNormalizer = require( './normalizers/PaymentAuthorityNormalizer' );
+const Logger = require( '../../helpers/logging/Logger' );
 
 class AssemblyPayments extends PaymentProvider {
   getID() {
@@ -322,12 +323,21 @@ class AssemblyPayments extends PaymentProvider {
         },
       });
 
+      Logger.info( 'CREATE ITEM - REQUEST' );
+      Logger.info( JSON.stringify( item, null, 2 ));
+
+      Logger.info( 'CREATE ITEM - RESPONSE' );
+      Logger.info( JSON.stringify( response, null, 2 ));
+
       /* Standardise the response */
       return {
         status: 200,
         data: response.data.items && new ItemNormalizer( response.data.items ).normalize(),
       };
     } catch ( e ) {
+      Logger.info( 'CREATE ITEM - ERROR' );
+      Logger.info( JSON.stringify( e.response.data, null, 2 ));
+
       return {
         status: e.response ? e.response.status : 500,
         data: e.response ? e.response.data : { error: 'An unexpected error has occured' },
