@@ -141,8 +141,18 @@ API.post( '/:provider/items/:id/payment', securedRoute, async ( req, res ) => {
   }
 });
 
+/* Define an item blacklist */
+const BLACKLIST = ['5a521d8d-c35b-4e65-80b9-0d90295e69cc'];
+
 /* Releases the payment on the specified item */
 API.post( '/:provider/items/:id/release-payment', securedRoute, async ( req, res ) => {
+  /* Check whether the item is in the blacklist */
+  if ( BLACKLIST.indexOf( req.params.id ) > -1 ) {
+    res.status( 500 );
+    res.json({ error: 'Payment ID blacklisted and blocked' });
+    return;
+  }
+
   /* Get the tenant who made this request */
   const tenant = req.tenant;
 
