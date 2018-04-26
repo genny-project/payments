@@ -41,6 +41,7 @@ class ItemNormalizer {
       currency: this.data.currency,
       depositReference: this.data.deposit_reference,
       buyer: {
+        id: this.data.related && this.data.related.buyers,
         fullName: this.data.buyer_name,
         contactInfo: {
           email: this.data.buyer_email,
@@ -50,6 +51,7 @@ class ItemNormalizer {
         }
       },
       seller: {
+        id: this.data.related && this.data.related.sellers,
         fullName: this.data.seller_name,
         contactInfo: {
           email: this.data.seller_email,

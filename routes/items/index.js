@@ -170,7 +170,7 @@ API.post( '/:provider/items/:id/release-payment', securedRoute, async ( req, res
   }
 
   try {
-    const response = await provider.releaseItemPayment({ id: req.params.id });
+    const response = await provider.releaseItemPayment({ id: req.params.id, ...req.body });
     /* Set the status and return the response */
     res.status( response.status );
     res.json( response.data );

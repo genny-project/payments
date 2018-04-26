@@ -21,6 +21,7 @@ class UserNormalizer {
         mobile: user.mobile,
       },
       location: user.location,
+      payoutAccount: user.related && user.related.payout_account,
       kyc: {
         verificationStatus: user.verification_state,
         heldState: user.held_state,

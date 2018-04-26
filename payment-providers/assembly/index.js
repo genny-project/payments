@@ -430,10 +430,41 @@ class AssemblyPayments extends PaymentProvider {
     }
   }
 
-  async releaseItemPayment({ id }) {
+  async releaseItemPayment({ id, singleItemDisbursement }) {
     /* Makes a payment on the specified item */
     try {
-      const response = await axios({
+      /* Get the item */
+      const itemResponse = await axios({
+        method: 'get',
+        url: `${this.getURL()}/items/${id}`,
+        auth: this.getOptions().auth,
+      });
+
+      const item = itemResponse.data.items && new ItemNormalizer( itemResponse.data.items ).normalize();
+
+      /* Get the user ID of the seller */
+      const sellerID = item.seller.id;
+
+      let user = null;
+
+      /* If we are doing single item disbursements */
+      if ( singleItemDisbursement === true ) {
+        /* Get the user */
+        const userResponse = await axios({
+          method: 'get',
+          url: `${this.getURL()}/users/${sellerID}`,
+          auth: this.getOptions().auth,
+        });
+
+        user = userResponse.data.users && new UserNormalizer( userResponse.data.users ).normalize();
+
+        /* Check that the user has a payout account */
+        if ( !user.payoutAccount || user.payoutAccount === '' ) {
+          throw new Error( 'The seller must have a payout account' );
+        }
+      }
+
+      const releaseResponse = await axios({
         method: 'patch',
         url: `${this.getURL()}/items/${id}/release_payment`,
         auth: this.getOptions().auth,
@@ -442,10 +473,45 @@ class AssemblyPayments extends PaymentProvider {
         },
       });
 
+      const releasedItem = releaseResponse.data.items && new ItemNormalizer( itemResponse.data.items ).normalize();
+
+      let disbursement = null;
+
+      if ( singleItemDisbursement === true ) {
+        /* Get the wallet account for the seller */
+        const walletAccountResponse = await axios({
+          method: 'get',
+          url: `${this.getURL()}/users/${sellerID}/wallet_accounts`,
+          auth: this.getOptions().auth,
+        });
+
+        /* Get the ID of the wallet account */
+        const walletID = walletAccountResponse.data.wallet_accounts.id;
+
+        /* Complete the disbursment */
+        const disbursementResponse = await axios({
+          method: 'post',
+          url: `${this.getURL()}/wallet_accounts/${walletID}/withdraw`,
+          auth: this.getOptions().auth,
+          data: {
+            account_id: user.payoutAccount,
+            amount: item.amount,
+          },
+        });
+
+        disbursement = {
+          id: disbursementResponse.data.disbursements.id,
+          batchID: disbursementResponse.data.disbursements.batch_id,
+        };
+      }
+
       /* Standardise the response */
       return {
         status: 200,
-        data: response.data.items && new ItemNormalizer( response.data.items ).normalize(),
+        data: {
+          item: releasedItem,
+          disbursement,
+        },
       };
     } catch ( e ) {
       return {
