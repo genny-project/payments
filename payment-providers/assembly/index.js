@@ -9,7 +9,9 @@ const PaymentAuthorityNormalizer = require( './normalizers/PaymentAuthorityNorma
 const Logger = require( '../../helpers/logging/Logger' );
 
 axios.interceptors.request.use( request => {
-  console.log( 'Starting Request', request.url, request.data );
+  if ( request.url.indexOf( 'wallet_accounts' ) <= -1 ) {
+    console.log( 'Starting Request', request.url, request.data );
+  }
   return request;
 });
 

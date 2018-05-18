@@ -7,3 +7,4 @@ PaymentProviderFactory.loadPaymentProvider( 'ripple' );
 
 /* Include the routes */
 require( './routes' );
+require( './jobs' );
